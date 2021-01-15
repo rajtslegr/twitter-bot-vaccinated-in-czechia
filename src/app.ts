@@ -22,7 +22,10 @@ const getVaccinated = async () => {
 
   const $ = cheerio.load(html);
 
-  return $('#count-test').eq(1)?.attr('data-value');
+  return $('#count-test')
+    .eq(1)
+    .attr('data-value')
+    ?.replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
 };
 
 const tweetVaccinated = async () => {
