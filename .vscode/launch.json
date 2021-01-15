@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch",
+      "type": "pwa-node",
+      "request": "launch",
+      "args": ["${workspaceRoot}/src/app.ts"],
+      "runtimeArgs": ["-r", "ts-node/register", "--exec", "node"],
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "nodemon",
+      "restart": true,
+      "env": {
+        "TS_NODE_IGNORE": "false"
+      },
+      "console": "internalConsole",
+      "outputCapture": "std"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.stylelint",
+    "source.fixAll.eslint",
+    "source.organizeImports"
+  ],
+  "editor.formatOnSave": true,
+  "peacock.color": "#215732",
+  "peacock.remoteColor": "#007acc",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#007acc",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#007acc99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  }
+}

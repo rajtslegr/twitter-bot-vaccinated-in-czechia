@@ -1,0 +1,34 @@
+{
+  "name": "node-typescript-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon --exec ts-node src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.23",
+    "@types/node": "^14.14.21",
+    "@types/twit": "^2.2.28",
+    "axios": "^0.21.1",
+    "cheerio": "^0.22.0",
+    "dotenv": "^8.2.0",
+    "ts-node": "^9.1.1",
+    "twit": "^2.2.11",
+    "typescript": "^4.1.3"
+  }
+}
