@@ -30,9 +30,15 @@ const getVaccinated = async () => {
 
 const tweetVaccinated = async () => {
   const vaccinated = await getVaccinated();
-  T.post('statuses/update', { status: vaccinated }, (_err, data: any) => {
-    console.log(data);
-  });
+  const {
+    data: [{ text }],
+  }: any = await T.get('statuses/user_timeline');
+
+  if (vaccinated !== text) {
+    T.post('statuses/update', { status: vaccinated }, (_err, data: any) => {
+      console.log(data);
+    });
+  }
 };
 
 tweetVaccinated();
