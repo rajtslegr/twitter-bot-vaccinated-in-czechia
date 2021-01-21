@@ -1,9 +1,9 @@
 {
   "editor.codeActionsOnSave": [
     "source.addMissingImports",
+    "source.organizeImports",
     "source.fixAll.stylelint",
-    "source.fixAll.eslint",
-    "source.organizeImports"
+    "source.fixAll.eslint"
   ],
   "editor.formatOnSave": true,
   "peacock.color": "#215732",
