@@ -25,7 +25,8 @@ const getVaccinated = async () => {
   return $('#count-test')
     .eq(1)
     .attr('data-value')
-    ?.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    ?.replace(/\s/g, '')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 };
 
 const tweetVaccinated = async () => {
