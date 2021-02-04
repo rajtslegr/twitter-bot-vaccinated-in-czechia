@@ -22,8 +22,7 @@ const getVaccinated = async () => {
 
   const $ = cheerio.load(html);
 
-  return $('#count-test')
-    .eq(1)
+  return $('#prehled > div:nth-child(3) > div > p.h3.text--center.mt-0.mb-0 > span:nth-child(1)')
     .attr('data-value')
     ?.replace(/\s/g, '')
     .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
