@@ -1,6 +1,5 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
 import dotenv from 'dotenv';
+import puppeteer from 'puppeteer';
 import Twit from 'twit';
 
 dotenv.config();
@@ -12,33 +11,47 @@ const T = new Twit({
   access_token_secret: process.env.ACCESS_TOKEN_SECRET!,
 });
 
+interface IData {
+  reported?: string;
+  reportedYesterday?: string;
+  ended?: string;
+  endedYesterday?: string;
+}
+
 const getVaccinated = async () => {
-  const generalUrl = 'https://onemocneni-aktualne.mzcr.cz/covid-19';
-  const html = await axios({
-    method: 'get',
-    url: generalUrl,
-    responseType: 'text',
-  }).then((x: any) => x.data);
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
 
-  const $ = cheerio.load(html);
+  await page.setViewport({ width: 1920, height: 926 });
+  await page.goto(
+    'https://datastudio.google.com/embed/reporting/2a0a5dde-c7bf-44f2-9625-3597259ecf2f/page/NyFwB',
+  );
+  await page.waitForSelector('.valueLabel');
+  const evaluate = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('.valueLabel:nth-child(2)'), (element) =>
+      element.textContent?.trim(),
+    ),
+  );
 
-  return $('#prehled > div:nth-child(3) > div > p.h3.text--center.mt-0.mb-0 > span:nth-child(1)')
-    .attr('data-value')
-    ?.replace(/\s/g, '')
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const data: IData = {
+    reported: evaluate[0] || 'Error',
+    reportedYesterday: evaluate[1] || 'Error',
+    ended: evaluate[2] || 'Error',
+    endedYesterday: evaluate[3] || 'Error',
+  };
+
+  await browser.close();
+
+  return data;
 };
 
 const tweetVaccinated = async () => {
-  const vaccinated = await getVaccinated();
-  const {
-    data: [{ text }],
-  }: any = await T.get('statuses/user_timeline');
+  const { reported, reportedYesterday, ended, endedYesterday } = await getVaccinated();
+  const status = `Vykázaná očkování celkem: ${reported}\nVykázaná očkování za včera: ${reportedYesterday}\nOsoby s ukončeným očkováním (dvě dávky) celkem: ${ended}\nOsoby s ukončeným očkováním celkem za včera: ${endedYesterday}`;
 
-  if (vaccinated !== text) {
-    T.post('statuses/update', { status: vaccinated }, (_err, data: any) => {
-      console.log(data);
-    });
-  }
+  T.post('statuses/update', { status: status }, (_err, data: any) => {
+    console.log(data);
+  });
 };
 
 tweetVaccinated();
