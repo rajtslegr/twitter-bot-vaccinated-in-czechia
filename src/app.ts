@@ -32,7 +32,7 @@ const getVaccinated = async () => {
   await page.waitForSelector('.valueLabel');
   const evaluate = await page.evaluate(() =>
     Array.from(document.querySelectorAll('.valueLabel:nth-child(2)'), (element) =>
-      element.textContent?.trim(),
+      element.textContent?.trim().replace(',', ' '),
     ),
   );
 
