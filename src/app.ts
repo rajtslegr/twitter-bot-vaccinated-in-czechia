@@ -21,7 +21,7 @@ interface IData {
 const getVaccinated = async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=cs-CS,cs'],
   });
   const page = await browser.newPage();
 
