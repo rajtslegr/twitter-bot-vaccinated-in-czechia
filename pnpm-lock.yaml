@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@types/node': ^15.0.2
+  '@types/node': ^15.0.3
   '@types/twit': ^2.2.28
   '@typescript-eslint/eslint-plugin': ^4.23.0
   '@typescript-eslint/parser': ^4.23.0
@@ -19,7 +19,7 @@ specifiers:
   typescript: ^4.2.4
 
 dependencies:
-  '@types/node': 15.0.2
+  '@types/node': 15.0.3
   '@types/twit': 2.2.28
   axios: 0.21.1
   dotenv: 9.0.2
@@ -118,6 +118,10 @@ packages:
 
   /@types/node/15.0.2:
     resolution: {integrity: sha512-p68+a+KoxpoB47015IeYZYRrdqMUcpbK8re/zpFB8Ld46LHC1lPEbp3EXgkEhAYEcPvjJF6ZO+869SQ0aH1dcA==}
+    dev: false
+
+  /@types/node/15.0.3:
+    resolution: {integrity: sha512-/WbxFeBU+0F79z9RdEOXH4CsDga+ibi5M8uEYr91u3CkT/pdWcV8MCook+4wDPnZBexRdwWS+PiVZ2xJviAzcQ==}
     dev: false
 
   /@types/twit/2.2.28:
