@@ -27,7 +27,7 @@ const getVaccinated = async () => {
 
   await page.setViewport({ width: 1920, height: 926 });
   await page.goto(
-    'https://datastudio.google.com/embed/reporting/2a0a5dde-c7bf-44f2-9625-3597259ecf2f/page/NyFwB',
+    'https://datastudio.google.com/embed/reporting/95dd159f-aaef-4d81-ab96-56d77484b9ae',
   );
   await page.waitForSelector('.valueLabel');
   const evaluate = await page.evaluate(() =>
