@@ -5,10 +5,10 @@ import Twit from 'twit';
 dotenv.config();
 
 const T = new Twit({
-  consumer_key: process.env.CONSUMER_KEY!,
-  consumer_secret: process.env.CONSUMER_SECRET!,
-  access_token: process.env.ACCESS_TOKEN!,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET!,
+  consumer_key: process.env.CONSUMER_KEY || '',
+  consumer_secret: process.env.CONSUMER_SECRET || '',
+  access_token: process.env.ACCESS_TOKEN || '',
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET || '',
 });
 
 interface IData {
@@ -31,8 +31,9 @@ const getVaccinated = async () => {
   );
   await page.waitForSelector('.valueLabel');
   const evaluate = await page.evaluate(() =>
-    Array.from(document.querySelectorAll('.valueLabel:nth-child(2)'), (element) =>
-      element.textContent?.trim().replace(/,/g, ' '),
+    Array.from(
+      document.querySelectorAll('.valueLabel:nth-child(2)'),
+      (element) => element.textContent?.trim().replace(/,/g, ' '),
     ),
   );
 
@@ -49,7 +50,8 @@ const getVaccinated = async () => {
 };
 
 const tweetVaccinated = async () => {
-  const { reported, reportedYesterday, ended, endedYesterday } = await getVaccinated();
+  const { reported, reportedYesterday, ended, endedYesterday } =
+    await getVaccinated();
   const status = `Vykázaná očkování celkem: ${reported}\nVykázaná očkování za včera: ${reportedYesterday}\nOsoby s ukončeným očkováním (dvě dávky) celkem: ${ended}\nOsoby s ukončeným očkováním celkem za včera: ${endedYesterday}`;
 
   T.post('statuses/update', { status: status }, (_err, data: any) => {
