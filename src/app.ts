@@ -14,6 +14,8 @@ const T = new Twit({
 interface IData {
   reported?: string;
   reportedYesterday?: string;
+  boosted?: string;
+  boostedYesterday?: string;
   ended?: string;
   endedYesterday?: string;
 }
@@ -27,7 +29,7 @@ const getVaccinated = async () => {
 
   await page.setViewport({ width: 1920, height: 926 });
   await page.goto(
-    'https://datastudio.google.com/embed/reporting/95dd159f-aaef-4d81-ab96-56d77484b9ae',
+    'https://datastudio.google.com/embed/reporting/c44fdb36-434f-42a6-bba5-fd24e97f4977',
   );
   await page.waitForSelector('.valueLabel');
   const evaluate = await page.evaluate(() =>
@@ -38,10 +40,12 @@ const getVaccinated = async () => {
   );
 
   const data: IData = {
-    reported: evaluate[0] || 'Error',
-    reportedYesterday: evaluate[1] || 'Error',
-    ended: evaluate[2] || 'Error',
-    endedYesterday: evaluate[3] || 'Error',
+    reported: evaluate[0] || 'Neplatná hodnota',
+    reportedYesterday: evaluate[1] || 'Neplatná hodnota',
+    boosted: evaluate[13] || 'Neplatná hodnota',
+    boostedYesterday: evaluate[12] || 'Neplatná hodnota',
+    ended: evaluate[2] || 'Neplatná hodnota',
+    endedYesterday: evaluate[3] || 'Neplatná hodnota',
   };
 
   await browser.close();
@@ -50,9 +54,15 @@ const getVaccinated = async () => {
 };
 
 const tweetVaccinated = async () => {
-  const { reported, reportedYesterday, ended, endedYesterday } =
-    await getVaccinated();
-  const status = `Vykázaná očkování celkem: ${reported}\nVykázaná očkování za včera: ${reportedYesterday}\nOsoby s ukončeným očkováním (dvě dávky) celkem: ${ended}\nOsoby s ukončeným očkováním celkem za včera: ${endedYesterday}`;
+  const {
+    reported,
+    reportedYesterday,
+    boosted,
+    boostedYesterday,
+    ended,
+    endedYesterday,
+  } = await getVaccinated();
+  const status = `Vykázaná očkování: ${reported}\nVykázaná očkování za včera: ${reportedYesterday}\nVykázané posilující dávky celkem: ${boosted}\nVykázané posilující dávky za včera: ${boostedYesterday}\nOsoby s ukončeným očkováním celkem: ${ended}\nOsoby s ukončeným očkováním za včera: ${endedYesterday}`;
 
   T.post('statuses/update', { status: status }, (_err, data: any) => {
     console.log(data);
