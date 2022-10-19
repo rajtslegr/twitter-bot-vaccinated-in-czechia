@@ -16,6 +16,8 @@ interface IData {
   reportedYesterday?: string;
   boosted?: string;
   boostedYesterday?: string;
+  boosted2nd?: string;
+  boostedYesterday2nd?: string;
   ended?: string;
   endedYesterday?: string;
 }
@@ -44,6 +46,8 @@ const getVaccinated = async () => {
     reportedYesterday: evaluate[1] || 'Neplatná hodnota',
     boosted: evaluate[13] || 'Neplatná hodnota',
     boostedYesterday: evaluate[12] || 'Neplatná hodnota',
+    boosted2nd: evaluate[16] || 'Neplatná hodnota',
+    boostedYesterday2nd: evaluate[17] || 'Neplatná hodnota',
     ended: evaluate[2] || 'Neplatná hodnota',
     endedYesterday: evaluate[3] || 'Neplatná hodnota',
   };
@@ -59,10 +63,12 @@ const tweetVaccinated = async () => {
     reportedYesterday,
     boosted,
     boostedYesterday,
+    boosted2nd,
+    boostedYesterday2nd,
     ended,
     endedYesterday,
   } = await getVaccinated();
-  const status = `Vykázaná očkování: ${reported}\nVykázaná očkování za včera: ${reportedYesterday}\nVykázané posilující dávky celkem: ${boosted}\nVykázané posilující dávky za včera: ${boostedYesterday}\nOsoby s ukončeným očkováním celkem: ${ended}\nOsoby s ukončeným očkováním za včera: ${endedYesterday}`;
+  const status = `Očkování: ${reported}\nOčkování za včera: ${reportedYesterday}\n1. posilující dávky: ${boosted}\n1. posilující dávky za včera: ${boostedYesterday}\n2. posilující dávky: ${boosted2nd}\n2. posilující dávky za včera: ${boostedYesterday2nd}\nUkončená očkování: ${ended}\nUkončená očkování za včera: ${endedYesterday}`;
 
   T.post('statuses/update', { status: status }, (_err, data: any) => {
     console.log(data);
